@@ -6,6 +6,7 @@ use App\Data\Auth\VerifyEmail\VerifyEmailRequest;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\ValidationException;
 use URL;
 
@@ -29,7 +30,7 @@ class VerifyEmailController extends Controller
         $verificationUrl = URL::temporarySignedRoute(
             'verification.verify',
             now()->addMinute(),
-            ['id' => $user->id, 'hash' => sha1($user->email)],
+            ['id' => $user->id, 'hash' => Hash::make($user->email)],
         );
 
         return redirect($verificationUrl);
