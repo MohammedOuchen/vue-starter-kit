@@ -17,7 +17,6 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\User> $users
  * @property-read int|null $users_count
- *
  * @method static \Database\Factories\BannerFactory factory($count = null, $state = [])
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Banner newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Banner newQuery()
@@ -30,7 +29,6 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Banner whereMessage($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Banner whereName($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Banner whereUpdatedAt($value)
- *
  * @mixin \Eloquent
  */
 class Banner extends Model

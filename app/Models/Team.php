@@ -21,10 +21,10 @@ use Spatie\MediaLibrary\HasMedia;
  * @property int $id
  * @property int|null $creator_id
  * @property string $name
- * @property \Spatie\LaravelData\Contracts\BaseData|\Spatie\LaravelData\Contracts\TransformableData|null $settings
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property \Illuminate\Support\Carbon|null $deleted_at
+ * @property \Spatie\LaravelData\Contracts\BaseData|\Spatie\LaravelData\Contracts\TransformableData|null $settings
  * @property-read \App\Models\User|null $creator
  * @property-read true $is_trashable
  * @property bool $is_trashed
@@ -34,7 +34,6 @@ use Spatie\MediaLibrary\HasMedia;
  * @property-read array $policy
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\User> $users
  * @property-read int|null $users_count
- *
  * @method static \Database\Factories\TeamFactory factory($count = null, $state = [])
  * @method static Builder<static>|Team filterTrashed(\App\Enums\Trashed\TrashedFilter $filter)
  * @method static Builder<static>|Team newModelQuery()
@@ -52,7 +51,6 @@ use Spatie\MediaLibrary\HasMedia;
  * @method static Builder<static>|Team whereUpdatedAt($value)
  * @method static Builder<static>|Team withTrashed(bool $withTrashed = true)
  * @method static Builder<static>|Team withoutTrashed()
- *
  * @mixin \Eloquent
  */
 class Team extends Model implements HasMedia

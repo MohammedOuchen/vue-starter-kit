@@ -1,0 +1,20 @@
+{
+    "agents": [
+        "claude_code",
+        "cursor"
+    ],
+    "guidelines": true,
+    "herd_mcp": false,
+    "mcp": true,
+    "packages": [
+        "inertiajs/inertia-laravel",
+        "spatie/laravel-medialibrary"
+    ],
+    "sail": true,
+    "skills": [
+        "pest-testing",
+        "inertia-vue-development",
+        "tailwindcss-development",
+        "medialibrary-development"
+    ]
+}
