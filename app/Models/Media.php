@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Carbon\Carbon;
 use Illuminate\Contracts\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Prunable;
 use Spatie\MediaLibrary\MediaCollections\Models\Media as SpatieMedia;
 
@@ -28,10 +29,11 @@ use Spatie\MediaLibrary\MediaCollections\Models\Media as SpatieMedia;
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property-read mixed $extension
  * @property-read mixed $human_readable_size
- * @property-read \Illuminate\Database\Eloquent\Model|\Eloquent $model
+ * @property-read Model|\Eloquent $model
  * @property-read mixed $original_url
  * @property-read mixed $preview_url
  * @property-read mixed $type
+ *
  * @method static \Spatie\MediaLibrary\MediaCollections\Models\Collections\MediaCollection<int, static> all($columns = ['*'])
  * @method static \Spatie\MediaLibrary\MediaCollections\Models\Collections\MediaCollection<int, static> get($columns = ['*'])
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Media newModelQuery()
@@ -56,6 +58,7 @@ use Spatie\MediaLibrary\MediaCollections\Models\Media as SpatieMedia;
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Media whereSize($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Media whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Media whereUuid($value)
+ *
  * @mixin \Eloquent
  */
 class Media extends SpatieMedia

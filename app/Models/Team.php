@@ -9,31 +9,38 @@ use App\Traits\HasPolicy;
 use App\Traits\InteractsWithMedia;
 use App\Traits\Searchable;
 use App\Traits\Trashable;
+use Database\Factories\TeamFactory;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\MorphOne;
 use Illuminate\Database\Eloquent\Relations\MorphToMany;
+use Illuminate\Support\Carbon;
+use Spatie\LaravelData\Contracts\BaseData;
+use Spatie\LaravelData\Contracts\TransformableData;
 use Spatie\LaravelData\WithData;
 use Spatie\MediaLibrary\HasMedia;
+use Spatie\MediaLibrary\MediaCollections\Models\Collections\MediaCollection;
 
 /**
  * @property int $id
  * @property int|null $creator_id
  * @property string $name
- * @property \Illuminate\Support\Carbon|null $created_at
- * @property \Illuminate\Support\Carbon|null $updated_at
- * @property \Illuminate\Support\Carbon|null $deleted_at
- * @property \Spatie\LaravelData\Contracts\BaseData|\Spatie\LaravelData\Contracts\TransformableData|null $settings
- * @property-read \App\Models\User|null $creator
+ * @property Carbon|null $created_at
+ * @property Carbon|null $updated_at
+ * @property Carbon|null $deleted_at
+ * @property BaseData|TransformableData|null $settings
+ * @property-read User|null $creator
  * @property-read true $is_trashable
  * @property bool $is_trashed
- * @property-read \App\Models\Media|null $logo
- * @property-read \Spatie\MediaLibrary\MediaCollections\Models\Collections\MediaCollection<int, \App\Models\Media> $media
+ * @property-read Media|null $logo
+ * @property-read MediaCollection<int, Media> $media
  * @property-read int|null $media_count
  * @property-read array $policy
- * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\User> $users
+ * @property-read Collection<int, User> $users
  * @property-read int|null $users_count
+ *
  * @method static \Database\Factories\TeamFactory factory($count = null, $state = [])
  * @method static Builder<static>|Team filterTrashed(\App\Enums\Trashed\TrashedFilter $filter)
  * @method static Builder<static>|Team newModelQuery()
@@ -51,13 +58,14 @@ use Spatie\MediaLibrary\HasMedia;
  * @method static Builder<static>|Team whereUpdatedAt($value)
  * @method static Builder<static>|Team withTrashed(bool $withTrashed = true)
  * @method static Builder<static>|Team withoutTrashed()
+ *
  * @mixin \Eloquent
  */
 class Team extends Model implements HasMedia
 {
     use BelongsToCreator;
 
-    /** @use HasFactory<\Database\Factories\TeamFactory> */
+    /** @use HasFactory<TeamFactory> */
     use HasFactory;
 
     use HasPolicy;

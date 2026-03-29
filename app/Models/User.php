@@ -13,17 +13,23 @@ use App\Traits\Searchable;
 use App\Traits\Trashable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Casts\Attribute;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\MorphOne;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Notifications\DatabaseNotification;
+use Illuminate\Notifications\DatabaseNotificationCollection;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Notifications\Notification;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Str;
 use Spatie\LaravelData\WithData;
 use Spatie\MediaLibrary\HasMedia;
+use Spatie\MediaLibrary\MediaCollections\Models\Collections\MediaCollection;
 use Spatie\OneTimePasswords\Models\Concerns\HasOneTimePasswords;
+use Spatie\OneTimePasswords\Models\OneTimePassword;
 
 /**
  * @property int $id
@@ -34,21 +40,21 @@ use Spatie\OneTimePasswords\Models\Concerns\HasOneTimePasswords;
  * @property string $full_name
  * @property string|null $phone
  * @property string $email
- * @property \Illuminate\Support\Carbon|null $email_verified_at
+ * @property Carbon|null $email_verified_at
  * @property string $password
  * @property string|null $remember_token
  * @property int|null $creator_id
- * @property \Illuminate\Support\Carbon|null $created_at
- * @property \Illuminate\Support\Carbon|null $updated_at
- * @property \Illuminate\Support\Carbon|null $deleted_at
+ * @property Carbon|null $created_at
+ * @property Carbon|null $updated_at
+ * @property Carbon|null $deleted_at
  * @property string|null $two_factor_secret
  * @property string|null $two_factor_recovery_codes
  * @property string|null $two_factor_confirmed_at
  * @property int|null $team_id
- * @property-read \Illuminate\Database\Eloquent\Collection<int, User> $activeMembers
+ * @property-read Collection<int, User> $activeMembers
  * @property-read int|null $active_members_count
- * @property-read \App\Models\Media|null $avatar
- * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Banner> $banners
+ * @property-read Media|null $avatar
+ * @property-read Collection<int, Banner> $banners
  * @property-read int|null $banners_count
  * @property-read User|null $creator
  * @property-read bool $is_editor
@@ -56,25 +62,26 @@ use Spatie\OneTimePasswords\Models\Concerns\HasOneTimePasswords;
  * @property-read bool $is_owner
  * @property-read true $is_trashable
  * @property bool $is_trashed
- * @property-read \Spatie\MediaLibrary\MediaCollections\Models\Collections\MediaCollection<int, \App\Models\Media> $media
+ * @property-read MediaCollection<int, Media> $media
  * @property-read int|null $media_count
- * @property-read \Illuminate\Database\Eloquent\Collection<int, User> $members
+ * @property-read Collection<int, User> $members
  * @property-read int|null $members_count
- * @property-read \Illuminate\Notifications\DatabaseNotificationCollection<int, \Illuminate\Notifications\DatabaseNotification> $notifications
+ * @property-read DatabaseNotificationCollection<int, DatabaseNotification> $notifications
  * @property-read int|null $notifications_count
- * @property-read \Illuminate\Database\Eloquent\Collection<int, \Spatie\OneTimePasswords\Models\OneTimePassword> $oneTimePasswords
+ * @property-read Collection<int, OneTimePassword> $oneTimePasswords
  * @property-read int|null $one_time_passwords_count
  * @property-read User|null $owner
- * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Permission> $permissions
+ * @property-read Collection<int, Permission> $permissions
  * @property-read int|null $permissions_count
  * @property-read array $policy
- * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Role> $roles
+ * @property-read Collection<int, Role> $roles
  * @property-read int|null $roles_count
- * @property-read \App\Models\Team|null $team
- * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Team> $teams
+ * @property-read Team|null $team
+ * @property-read Collection<int, Team> $teams
  * @property-read int|null $teams_count
- * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Team> $trashedTeams
+ * @property-read Collection<int, Team> $trashedTeams
  * @property-read int|null $trashed_teams_count
+ *
  * @method static \Illuminate\Database\Eloquent\Builder<static>|User admins()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|User editors()
  * @method static \Database\Factories\UserFactory factory($count = null, $state = [])
@@ -114,6 +121,7 @@ use Spatie\OneTimePasswords\Models\Concerns\HasOneTimePasswords;
  * @method static \Illuminate\Database\Eloquent\Builder<static>|User withoutPermission($permissions)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|User withoutRole($roles, $guard = null)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|User withoutTrashed()
+ *
  * @mixin \Eloquent
  */
 class User extends Authenticatable implements HasMedia, MustVerifyEmail
